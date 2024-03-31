@@ -15,7 +15,9 @@ const Home = () => {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const cities = [];
       querySnapshot.forEach((doc) => {
-        cities.push(doc.data());
+        cities.push({ ...doc.data(), id: doc.id });
+
+        // console.log(typeof doc.id);
       });
       setBlogs(cities);
     });
@@ -34,11 +36,13 @@ const Home = () => {
     fetchPost();
   }, []);
 
+  console.log(blogs);
+
   return (
     <>
       <NavBar />
       <main className="mt-[80px] px-6">
-        {blogs.map((blog) => (
+        {blogs?.map((blog) => (
           <Blog key={blog.title} post={blog} />
         ))}
       </main>
